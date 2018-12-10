@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>Tiro al blanco</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --ancho: 480px;
+            --alto: 320px;
+            --tiempo: 25s;
+            counter-reset: puntaje;
+        }
+        h2 {
+            text-align: center;
+        }
+        #areaJ {
+            position: relative;
+            border: 1px solid;
+            width: var(--ancho);
+            height: var(--alto);
+            background-image: url(img/fondo.jpg);
+            left: 50%;
+            transform:  translateX(-50%);
+            cursor: url("img/pistola.png"), default;
+        }
+        #areaJ input[type=checkbox] {
+            visibility: hidden;
+            float: left;
+        }
+        #areaJ label {
+            position: relative;
+            display: block;
+            width: 46px;
+            height: 46px;
+            background-image: url("img/objetivo.png");
+            margin-top: 5px;
+            cursor: url("img/pistola.png"), default;
+         
+        }
+        #areaJ::after {
+            content:"Puntaje : "counter(puntaje);
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-weight: bold;
+        }
+        #areaJ input:checked {
+            counter-increment: puntaje;
+        }
+        #areaJ label::after {
+            content: "   ";
+            display: block;
+            position: absolute;
+            background-image: url("img/explosion.png");
+            top: 5px;
+            width: 50px;
+            height: 50px;
+            visibility: hidden;
+            
+        }
+        #areaJ input:checked + label::after{
+            visibility: visible;
+            animation: explotar .5s linear forwards;
+        }
+        #areaJ input:checked + label {
+            visibility: hidden;
+        }
+        #loader {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1px solid;
+            width: var(--ancho);
+            height: 10px;
+        }
+        #loader div {
+            height: 100%;
+            width: 1px;
+            background-color: red;
+            animation: cargar var(--tiempo) linear forwards;
+        }
+        #modal {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index:300;
+            color: white;
+            text-align: center;
+            visibility: hidden;
+            animation: findejuego .5s linear var(--tiempo) forwards;
+        }
+        #modal a {
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        @keyframes explotar {
+            from {
+                visibility: visible;
+                opacity: 1;
+            }
+            to {
+                visibility: hidden;
+                opacity: 0;
+            }
+        }
+        @keyframes cargar {
+            from {
+                width: 1px;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        @keyframes findejuego {
+            from {
+                visibility: hidden;
+            }
+            to {
+                visibility: visible;
+            }
+        }
+
+        @keyframes mover{
+            0% {
+                left: 0px;
+            }
+            50% {
+                left: 430px;
+            }
+            100% {
+                left: 0%;
+            }
+        }
+    
+    
+    </style>
+
+</head>
+
+<body>
+
+    <h2>Tiro al blanco</h2>
+
+    <div id="loader">
+        <div></div>
+    </div>
+
+    <div id="areaJ">
+        <div id="modal">
+            <h1>Fin de juego</h1>
+            <a href="">Jugar otra vez</a>
+        </div>
+        <br/>
+        <input type="checkbox" id="pato1"><label for="pato1" style="animation: mover 2.1s ease infinite"></label>
+        <input type="checkbox" id="pato2"><label for="pato2" style="animation: mover 1.8s ease-out infinite"></label>
+        <input type="checkbox" id="pato3"><label for="pato3" style="animation: mover 1.6s ease-in infinite"></label>
+        <input type="checkbox" id="pato4"><label for="pato4" style="animation: mover 2s cubic-bezier(.41,1.01,.63,0) infinite"></label>
+        <input type="checkbox" id="pato5"><label for="pato5" style="animation: mover 1.3s infinite"></label>
+        
+        
+    </div>
+
+</body>
+
+</html>
